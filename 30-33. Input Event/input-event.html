@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Form World</title>
+    <style>
+        .contents {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid black;
+            border-width: 2px;
+            padding: 8px;
+        }
+
+        .form-element {
+            margin: 8px;
+            align-items: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="contents">
+        <h2 align="center"><b>Input Event Form</b></h2>
+        <div class="formContent">
+            <form id="formDataDiri" autocomplete="off">
+                <div class="form-element" id="fieldName">
+                    <label for="nama">Nama Panggilan:</label><br>
+                    <input id="inputNamaPanggilan" type="text" name="nama" placeholder="Nama panggilan Anda"
+                        maxlength="15"><br>
+                    <label id="notifikasiSisaKarakter">Sisa karakter : <span id="sisaKarakter"></span></label>
+                </div>
+                <div class="form-element" id="fieldCopy">
+                    <label for="copy"><i>Copy</i> tulisan ini:</label><br>
+                    <input id="inputCopy" type="text" name="copy" value="Hello World!" disabled><br>
+                </div>
+                <div class="form-element" id="fieldPaste">
+                    <label for="paste"><i>Paste</i> tulisan di sini:</label><br>
+                    <input id="inputPaste" type="text" name="paste" placeholder="Paste sesuatu di sini"><br>
+                </div>
+                <div class="form-element" id="fieldCaptcha">
+                    <label for="captcha">Tulis <i>captcha</i> berikut:</label><br>
+                    <img src="https://i.ibb.co/yy59QPB/Captcha.png" alt="Captcha"><br>
+                    <input id="inputCaptcha" type="text" name="captcha" placeholder="Tulis captcha di sini"><br>
+                    <p>Tekan Enter pada keyboard jika sudah selesai menulis <i>captcha</i></p>
+                </div>
+                <div class="form-element" align="center">
+                    <input id="submitButton" type="submit" value="Submit Data" disabled>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const inputMaxLengthOnLoad = document.getElementById("inputNamaPanggilan").maxLength;
+            document.getElementById("sisaKarakter").innerText = inputMaxLengthOnLoad;
+            document.getElementById("notifikasiSisaKarakter").style.visibility = "hidden";
+        });
+
+        // onInput
+        document.getElementById("inputNamaPanggilan").addEventListener("input", function () {
+            const jumlahKarakterDiketik = document.getElementById("inputNamaPanggilan").value.length;
+            const jumlahKarakterMaksimal = document.getElementById("inputNamaPanggilan").maxLength;
+            console.log(jumlahKarakterDiketik, jumlahKarakterMaksimal);
+            const sisaKarakterUpdate = jumlahKarakterMaksimal - jumlahKarakterDiketik;
+            document.getElementById("sisaKarakter").innerText = sisaKarakterUpdate;
+            if (sisaKarakterUpdate == 0) {
+                document.getElementById("sisaKarakter").innerText = "batas maksimal tercapai!";
+            } else if (sisaKarakterUpdate <= 5) {
+                document.getElementById("notifikasiSisaKarakter").style.color = "red";
+            } else {
+                document.getElementById("notifikasiSisaKarakter").style.color = "black";
+            }
+        });
+
+        // onFocus
+        document.getElementById("inputNamaPanggilan").addEventListener("focus", function () {
+            document.getElementById("notifikasiSisaKarakter").style.visibility = null;
+        });
+
+        // onBlur
+        document.getElementById("inputNamaPanggilan").addEventListener("blur", function () {
+            document.getElementById("notifikasiSisaKarakter").style.visibility = 'hidden';
+        });
+
+        // onChange
+        document.getElementById("inputCaptcha").addEventListener("change", function () {
+            const inputCaptcha = document.getElementById("inputCaptcha").value;
+            const submitButtonStatus = document.getElementById("submitButton");
+            if (inputCaptcha == "PRNU") {
+                submitButtonStatus.removeAttribute("disabled");
+            }
+        });
+
+        // onSubmit
+        document.getElementById("formDataDiri").addEventListener("submit", function () {
+            const inputCaptcha = document.getElementById("inputCaptcha").value;
+            if (inputCaptcha == "PRNU") {
+                event.preventDefault();
+                alert("Selamat! Captcha Anda lolos :D");
+            } else {
+                alert("Captcha Anda belum tepat :(")
+                submitButtonStatus.addAttribute("disabled", true);
+            }
+        });
+
+        // onCopy
+        document.getElementById("inputCopy").addEventListener("copy", function () {
+            alert("Anda telah men-copy sesuatu...");
+        });
+
+        // onPaste
+        document.getElementById("inputPaste").addEventListener("paste", function () {
+            alert("Anda telah mem-paste sebuah teks...");
+        });
+
+    </script>
+</body>
+
+</html>

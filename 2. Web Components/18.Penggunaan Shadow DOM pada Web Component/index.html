@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Styling without Shadow DOM</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<style>
+    figure {
+        border: thin #c0c0c0 solid;
+        display: flex;
+        flex-flow: column;
+        padding: 5px;
+        max-width: 220px;
+        margin: auto;
+    }
+
+
+    figure>img {
+        max-width: 220px;
+    }
+
+
+    figure>figcaption {
+        background-color: #222;
+        color: #fff;
+        font: italic smaller sans-serif;
+        padding: 3px;
+        text-align: center;
+    }
+</style>
+
+<body>
+    <image-figure src="https://www.dicoding.com/android-chrome-192x192.png" alt="Dicoding Logo"
+        caption="Huruf g dalam logo Dicoding">
+    </image-figure>
+
+
+    <!-- Styling di dalam image-figure akan mempengaruhi juga elemen di luarnya -->
+    <figure>
+        <img src="https://www.dicoding.com/android-chrome-192x192.png" alt="Dicoding logo" />
+        <figcaption>Huruf g dalam logo Dicoding</figcaption>
+    </figure>
+    <script src="image-figure.js"></script>
+</body>
+
+</html>
